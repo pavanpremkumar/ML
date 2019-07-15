@@ -1,0 +1,61 @@
+# # Download the Enron Dataset from the Link and Extract the folder by below Command
+# # Link-http://www.aueb.gr/users/ion/data/enron-spam/preprocessed/enron1.tar.gz
+
+# import tarfile
+# tf = tarfile.open("enron1.tar.gz")
+# tf.extractall()
+file_path=r'C:\Users\44972\Downloads\enron1\ham\0007.1999-12-14.farmer.ham.txt'
+with open(file_path, 'r') as infile:
+...  ham_sample= infile.read()
+...
+print(ham_sample)
+file_path= r'C:\Users\44972\Downloads\enron1\spam\0006.2003-12-18.GP.spam.txt'
+ with open(file_path,'r') as infile:
+...  spam_sample = infile.read()
+...
+print(spam_sample)
+import glob
+import os
+e_mails , labels = [], []
+file_path= 'C:/Users/44972/Downloads/enron1/spam'
+for filename in glob.glob(os.path.join(file_path,'*.txt')):
+            with open (filename,'r') as infile:
+                e_mails.append(infile.read())
+            labels.append(1)
+file_path=  'C:/Users/44972/Downloads/enron1/ham'
+for filename in glob.glob(os.path.join(file_path,'*.txt')):
+    with open(filename,'r') as infile:
+        e_mails.append(infile.read())
+        labels.append(0)
+  ---------
+  len(e_mails)
+  len(labels)
+  ---------
+  # Step-2: Clean the Raw data 
+# 1.Removal of Punctuation and Number
+# 2.Stop Words 
+# 3.human nama removal
+# 3.Lemmatization
+from nltk.corpus import names
+from nltk.stem import WordNetLemmatizer
+def letters_only(astr):
+    return astr.isalpha()
+all_names = set(names.words())
+lemmatizer = WordNetLemmatizer()
+def clean_text(docs):
+    cleaned_docs= []                             
+    for doc in docs:
+        cleaned_docs.append(
+            ' '.join([lemmatizer.lemmatize(word.lower())
+                        for word in doc.split()
+                        if letters_only(word)
+                        and word not in all_names]))
+        
+        return cleaned_docs
+--------
+   cleaned_e_mails=clean_text(e_mails)
+   cleaned_e_mails[0]
+   
+   
+   1111111111111111111111111111111
+   
